@@ -1,0 +1,97 @@
+# Build folder
+build/
+
+# Object files
+*.slo
+*.lo
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Static libraries
+*.lib
+*.a
+*.la
+*.lai
+*.lo
+
+# Shared objects
+*.so
+*.dll
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# pyenv
+.python-version
+
+# dotenv
+.env
+
+# virtualenv
+.venv/
+venv/
+ENV/
+
+# Mac files
+*.DS_Store
+.AppleDouble
+.LSOverride

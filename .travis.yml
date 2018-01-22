@@ -1,0 +1,25 @@
+language: python
+os: linux
+dist: trusty
+sudo: false
+
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+install:
+  - pip install -e python
+  - pip install -r python/test-requirements.txt
+
+script:
+  - make
+  - make lint
+
+jobs:
+  include:
+    - stage: distribute
+      if: branch = master AND type != pull_request
+      install: skip
+      script: make distribute
