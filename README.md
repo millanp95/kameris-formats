@@ -37,7 +37,7 @@ Data is always stored in little-endian format. All header values except the sign
 
 | Start | End  | Size (bytes)  | Name         | Description                                                               |
 |-------|------|---------------|--------------|---------------------------------------------------------------------------|
-| 0x00  | 0x05 | 6             | `magic`      | File signature, always "MMREPR"                                           |
+| 0x00  | 0x05 | 6             | `signature`  | File signature, always "MMREPR"                                           |
 | 0x06  | 0x06 | 1             | `version`    | Always 0                                                                  |
 | 0x07  | 0x07 | 1             | `is_sparse`  | Whether the matrices are sparse (0 or 1)                                  |
 | 0x08  | 0x08 | 1             | `key_type`   | The type of matrix keys as an `element_type`, unused if `is_sparse` is 0  |
@@ -57,7 +57,7 @@ If the sparse flag is set, each of the `count` matrices, one after the other, is
 
 | Start | End  | Size (bytes)  | Name         | Description                                    |
 |-------|------|---------------|--------------|------------------------------------------------|
-| 0x00  | 0x05 | 6             | `magic`      | File signature, always "MMDIST"                |
+| 0x00  | 0x05 | 6             | `signature`  | File signature, always "MMDIST"                |
 | 0x06  | 0x06 | 1             | `version`    | Always 0                                       |
 | 0x07  | 0x07 | 1             | `value_type` | The type of matrix values as an `element_type` |
 | 0x08  | 0x0F | 8             | `size`       | Number of rows = columns of the matrix         |

@@ -85,7 +85,7 @@ namespace mmg {
 						_file.seekg(repr_header_size + (sizeof(uint64_t) * _header.count) +
 							std::accumulate(&_header_sizes[0], &_header_sizes[index], 0));
 						result = make_sparse_vector_adapter<Key, Value>(
-							read_map_binary<Key, Value>(_file), _header.rows * _header.cols);
+							read_map_binary<Key, Value>(_file, _header_sizes[index]), _header.rows * _header.cols);
 					});
 				} else {
 					_file.seekg(repr_header_size + (index * _header.rows * _header.cols * sizeof(Value)));

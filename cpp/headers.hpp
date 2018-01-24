@@ -8,6 +8,7 @@
 
 namespace mmg {
 	struct repr_header {
+		//0 at the end here is the version number
 		static constexpr std::array<char, 7> signature = {'M', 'M', 'R', 'E', 'P', 'R', '\0'};
 
 		bool /*(stored as uint8_t)*/ is_sparse;
@@ -21,6 +22,7 @@ namespace mmg {
 		sizeof repr_header().rows + sizeof repr_header().cols;
 
 	struct dist_header {
+		//0 at the end here is the version number
 		static constexpr std::array<char, 7> signature = {'M', 'M', 'D', 'I', 'S', 'T', '\0'};
 
 		element_type value_type;

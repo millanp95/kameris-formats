@@ -17,7 +17,7 @@ distribute: pip-distribute
 
 
 clean:
-	rm -rf build dist && find . -type f \( -name '*.pyc' -o -name '*.pyo' \) -delete
+	rm -rf build dist *.egg-info && find . -type f \( -name '*.pyc' -o -name '*.pyo' \) -delete
 
 
 lint:

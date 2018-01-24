@@ -18,7 +18,7 @@ namespace mmg {
 		size_t _curr_row = 0;
 
 		void write_header(const dist_header &header) {
-			write_array_binary(_file, dist_header::signature.data(), 7);
+			write_array_binary(_file, dist_header::signature.data(), dist_header::signature.size());
 			write_binary(_file, static_cast<element_underlying_t>(header.value_type));
 			write_binary(_file, header.size);
 		}
@@ -35,9 +35,15 @@ namespace mmg {
 		}
 
 		template <typename Matr>
-		void write_next_row(const Matr &matr) {
+		void write_next_row(const Matr &matr, bool flush_file = true) {
 			if (element_type_for_type<Matr::value_type> != _header.value_type) {
-				throw std::invalid_argument("The given matrix must contain values of the same type as the _header");
+				throw std::invalid_argument("The given matrix's value type must match the header");
+			}
+			if (matr.rows() != _header.size || matr.cols() != _header.size) {
+				throw std::invalid_argument("The size of given matrix must match the size given in the header");
+			}
+			if (_curr_row >= _header.size) {
+				throw std::logic_error("The whole matrix has already been written");
 			}
 
 			for (size_t i = _curr_row + 1; i < _header.size; ++i) {
@@ -45,6 +51,17 @@ namespace mmg {
 			}
 
 			++_curr_row;
+			if (flush_file) {
+				_file.flush();
+			}
+		}
+
+		template <typename Matr>
+		void write_whole_matrix(const Matr &matr) {
+			for (size_t i = 0; i < _header.size; ++i) {
+				write_next_row(matr, false);
+			}
+
 			_file.flush();
 		}
 

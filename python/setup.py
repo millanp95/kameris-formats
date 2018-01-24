@@ -4,7 +4,8 @@ from setuptools import setup, find_packages
 setup(
     name='modmap-generator-formats',
     version='0.1.dev1',
-    description=('Reader and writer implementations for the file formats used by modmap-generator-cpp.'),
+    description=('Reader and writer implementations for the file formats used '
+                 'by modmap-generator-cpp.'),
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
@@ -22,6 +23,7 @@ setup(
     license='MIT',
     packages=find_packages(),
     install_requires=[
-        'numpy'
+        'numpy',
+        'scipy'
     ]
 )

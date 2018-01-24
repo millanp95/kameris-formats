@@ -20,7 +20,7 @@ namespace mmg {
 		size_t _curr_matr = 0;
 
 		void write_header(const repr_header &header) {
-			write_array_binary(_file, repr_header::signature.data(), 7);
+			write_array_binary(_file, repr_header::signature.data(), repr_header::signature.size());
 			write_binary(_file, static_cast<uint8_t>(header.is_sparse));
 			write_binary(_file, static_cast<element_underlying_t>(header.key_type));
 			write_binary(_file, static_cast<element_underlying_t>(header.value_type));
@@ -80,6 +80,12 @@ namespace mmg {
 		void write_matrix(const Matr &matr) {
 			if (element_type_for_type<Matr::value_type> != _header.value_type) {
 				throw std::invalid_argument("The given matrix's value type must match the header");
+			}
+			if (matr.rows() != _header.rows || matr.cols() != _header.cols) {
+				throw std::invalid_argument("The size of given matrix must match the size given in the header");
+			}
+			if (_curr_matr >= _header.count) {
+				throw std::logic_error("All matrices have already been written");
 			}
 
 			write_matrix_impl(matr);
