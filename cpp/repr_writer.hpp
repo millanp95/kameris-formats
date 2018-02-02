@@ -41,7 +41,7 @@ namespace mmg {
 			if (!_header.is_sparse) {
 				throw std::invalid_argument("The given matrix must be sparse because the header is sparse");
 			}
-			if (element_type_for_type<Matr::key_type> != _header.key_type) {
+			if (element_type_for_type<typename Matr::key_type> != _header.key_type) {
 				throw std::invalid_argument("The given matrix's key type must match the header");
 			}
 
@@ -78,7 +78,7 @@ namespace mmg {
 
 		template <typename Matr>
 		void write_matrix(const Matr &matr) {
-			if (element_type_for_type<Matr::value_type> != _header.value_type) {
+			if (element_type_for_type<typename Matr::value_type> != _header.value_type) {
 				throw std::invalid_argument("The given matrix's value type must match the header");
 			}
 			if (matr.rows() != _header.rows || matr.cols() != _header.cols) {

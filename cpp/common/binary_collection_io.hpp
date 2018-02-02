@@ -30,8 +30,8 @@ namespace mmg {
 	}
 
 	template <typename Key, typename T, template <typename, typename, typename...> class Map = std::map>
-	inline Map<Key, T> read_map_binary(std::istream &stream, size_t num_values) {
-		Map<Key, T> result;
+	inline Map<uint64_t, T> read_map_binary(std::istream &stream, size_t num_values) {
+		Map<uint64_t, T> result;
 
 		for (uint64_t i = 0; i < num_values; ++i) {
 			Key first;
@@ -39,7 +39,7 @@ namespace mmg {
 			T second;
 			read_binary(stream, second);
 
-			result.emplace_hint(result.end(), first, second);
+			result.emplace_hint(result.end(), uint64_t(first), second);
 		}
 
 		return result;

@@ -17,6 +17,7 @@ namespace mmg {
 		uint64_t count;
 		uint64_t rows, cols;
 	};
+	constexpr std::array<char, 7> repr_header::signature; // NOLINT
 	constexpr size_t repr_header_size = repr_header::signature.size() + sizeof(uint8_t) +
 		sizeof repr_header().key_type + sizeof repr_header().value_type + sizeof repr_header().count +
 		sizeof repr_header().rows + sizeof repr_header().cols;
@@ -28,6 +29,7 @@ namespace mmg {
 		element_type value_type;
 		uint64_t size;
 	};
+	constexpr std::array<char, 7> dist_header::signature; // NOLINT
 	constexpr size_t dist_header_size =
 		dist_header::signature.size() + sizeof dist_header().value_type + sizeof dist_header().size;
 }

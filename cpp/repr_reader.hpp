@@ -7,6 +7,7 @@
 #include <mutex>
 #include <numeric>
 #include <string>
+#include <utility>
 
 #include <boost/mpl/back_inserter.hpp>
 #include <boost/mpl/copy.hpp>
@@ -27,20 +28,22 @@ namespace mmg {
 	 private:
 		std::ifstream _file;
 		const repr_header _header;
-		const std::unique_ptr<uint64_t[]> _header_sizes;
+		std::unique_ptr<uint64_t[]> _header_sizes;
 		std::mutex _lock;
 
 		//boost::mpl needs some help to work with template template and variadic template args
 		template <typename Key, typename Value>
 		struct SparseVectorAdapterTypeWrapper {
-			using type = SparseVectorAdapter<Key, Value>;
+			using map_type = decltype(read_map_binary<Key, Value>(std::declval<std::istream &>(), size_t()));
+			using type = decltype(make_sparse_vector_adapter(std::declval<map_type>(), size_t()));
 		};
 
 		repr_header read_header() {
 			const std::unique_ptr<char[]> file_signature(read_array_binary<char>(_file, repr_header::signature.size()));
-			if (!std::equal(&file_signature[0], &file_signature[repr_header::signature.size()],
-					repr_header::signature.begin())) {
-				throw std::invalid_argument("The given file is not a valid mm-repr file");
+			for (size_t i = 0; i < repr_header::signature.size(); ++i) {
+				if (file_signature[i] != repr_header::signature[i]) {
+					throw std::invalid_argument("The given file is not a valid mm-repr file");
+				}
 			}
 
 			repr_header result{};
@@ -67,10 +70,15 @@ namespace mmg {
 			}
 		}
 
+		const repr_header &header() const {
+			return _header;
+		}
+
 		auto read_matrix(size_t index) {
 			using regular_matrix_types =
 				typename boost::mpl::transform<element_type_types, MatrixAdapter<boost::mpl::_1>>::type;
-			using sparse_vector_types = mmg::mpl_all_pairs<SparseVectorAdapterTypeWrapper, element_type_types>;
+			using sparse_vector_types = typename boost::mpl::transform<element_type_types,
+				SparseVectorAdapterTypeWrapper<uint64_t, boost::mpl::_1>>::type;
 			typename boost::make_variant_over<boost::mpl::copy<sparse_vector_types,
 				boost::mpl::back_inserter<regular_matrix_types>>::type>::type result;
 
@@ -83,8 +91,8 @@ namespace mmg {
 						using Key = decltype(dummy_key);
 
 						_file.seekg(repr_header_size + (sizeof(uint64_t) * _header.count) +
-							std::accumulate(&_header_sizes[0], &_header_sizes[index], 0));
-						result = make_sparse_vector_adapter<Key, Value>(
+							std::accumulate(&_header_sizes[0], &_header_sizes[index], uint64_t(0)));
+						result = make_sparse_vector_adapter<uint64_t, Value>(
 							read_map_binary<Key, Value>(_file, _header_sizes[index]), _header.rows * _header.cols);
 					});
 				} else {

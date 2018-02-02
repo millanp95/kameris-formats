@@ -36,7 +36,7 @@ namespace mmg {
 
 		template <typename Matr>
 		void write_next_row(const Matr &matr, bool flush_file = true) {
-			if (element_type_for_type<Matr::value_type> != _header.value_type) {
+			if (element_type_for_type<typename Matr::value_type> != _header.value_type) {
 				throw std::invalid_argument("The given matrix's value type must match the header");
 			}
 			if (matr.rows() != _header.size || matr.cols() != _header.size) {

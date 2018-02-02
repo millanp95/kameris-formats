@@ -23,9 +23,10 @@ namespace mmg {
 	 private:
 		static dist_header read_header(std::istream &file) {
 			const std::unique_ptr<char[]> file_signature(read_array_binary<char>(file, dist_header::signature.size()));
-			if (!std::equal(&file_signature[0], &file_signature[dist_header::signature.size()],
-					dist_header::signature.begin())) {
-				throw std::invalid_argument("The given file is not a valid mm-dist file");
+			for (size_t i = 0; i < dist_header::signature.size(); ++i) {
+				if (file_signature[i] != dist_header::signature[i]) {
+					throw std::invalid_argument("The given file is not a valid mm-dist file");
+				}
 			}
 
 			dist_header result{};
