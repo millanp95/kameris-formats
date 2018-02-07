@@ -21,9 +21,9 @@ class repr_reader():
         # fetch header values
         self.is_sparse = bool(ord(self.file.read(1)))
         key_type_val = ord(self.file.read(1))
-        self.key_type = common.numpy_dtype_for_element_type[key_type_val]
+        self.key_type = common.dtype_for_element_type[key_type_val]
         value_type_val = ord(self.file.read(1))
-        self.value_type = common.numpy_dtype_for_element_type[value_type_val]
+        self.value_type = common.dtype_for_element_type[value_type_val]
         self.count, = struct.unpack('<Q', self.file.read(8))
         self.rows, = struct.unpack('<Q', self.file.read(8))
         self.cols, = struct.unpack('<Q', self.file.read(8))

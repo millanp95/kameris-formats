@@ -21,8 +21,8 @@ class dist_reader():
             size, = struct.unpack('<Q', file.read(8))
 
             # read matrix values
-            matrix_data_size = size * (size - 1) / 2
-            np_dtype = common.numpy_dtype_for_element_type[value_type]
+            matrix_data_size = int(size * (size - 1) / 2)
+            np_dtype = common.dtype_for_element_type[value_type]
             matrix_data = np.fromfile(file, dtype=np.dtype(np_dtype),
                                       count=matrix_data_size)
 
