@@ -5,13 +5,13 @@ all: pip-package
 
 
 pip-package: clean
-	python python/setup.py sdist
+	cd python && python setup.py sdist
 	pip install --upgrade wheel
-	python python/setup.py bdist_wheel --universal
+	cd python && python setup.py bdist_wheel --universal
 
 pip-distribute: pip-package
 	pip install --upgrade twine
-	python -m twine upload dist/*.whl dist/*.tar.*
+	cd python && python -m twine upload dist/*.whl dist/*.tar.*
 
 distribute: pip-distribute
 
