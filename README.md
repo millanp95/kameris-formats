@@ -9,8 +9,10 @@ These are implementations of readers and writers for the file formats used by [m
 |-------------|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
 | C++         | [`cpp/`](https://github.com/stephensolis/modmap-generator-formats/tree/master/cpp)                 | Header-only, requires [libmmg](https://github.com/stephensolis/modmap-generator-cpp/tree/master/libmmg) |
 | Python      | [`python/`](https://github.com/stephensolis/modmap-generator-formats/tree/master/python)           | On PyPI: [![PyPI version](https://badge.fury.io/py/modmap-generator-formats.svg)](https://badge.fury.io/py/modmap-generator-formats) |
+<!---
 | Mathematica | [`mathematica/`](https://github.com/stephensolis/modmap-generator-formats/tree/master/mathematica) | |
 | MATLAB      | [`matlab/`](https://github.com/stephensolis/modmap-generator-formats/tree/master/matlab)           | |
+--->
 
 ---
 

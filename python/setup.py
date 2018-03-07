@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='modmap-generator-formats',
-    version='0.1.dev4',
+    version='1.0.1',
     description=('Reader and writer implementations for the file formats used '
                  'by modmap-generator-cpp.'),
     classifiers=[

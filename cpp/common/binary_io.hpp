@@ -16,7 +16,7 @@ namespace mmg {
 	inline void read_binary(std::istream &stream, T &target) {
 		storage_encoding_t<T> val;
 		read_binary_raw(stream, val);
-		target = from_storage_encoding<T>(val);
+		target = from_storage_encoding<T>(val); // NOLINT
 	}
 
 	template <typename T>
