@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/stephensolis/modmap-generator-formats.svg?branch=master)](https://travis-ci.org/stephensolis/modmap-generator-formats)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7f794ad8eda04e5b94905b99a219a95e)](https://www.codacy.com/app/stephensolis/modmap-generator-formats)
+[![codebeat badge](https://codebeat.co/badges/4222a49b-3694-41d8-a560-41f7a3b3cb90)](https://codebeat.co/projects/github-com-stephensolis-modmap-generator-formats-master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5d0fdf9a3f626cf340fc/maintainability)](https://codeclimate.com/github/stephensolis/modmap-generator-formats/maintainability)
 
 These are implementations of readers and writers for the file formats used by [modmap-generator-cpp](https://github.com/stephensolis/modmap-generator-cpp), for the following languages:
 
