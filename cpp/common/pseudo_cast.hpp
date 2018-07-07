@@ -3,7 +3,7 @@
 
 #include <cstring>
 
-namespace mmg {
+namespace kameris {
 	template <typename To, typename From>
 	inline To pseudo_cast(const From &from) {
 		static_assert(sizeof(From) == sizeof(To), "Types given to pseudo_cast must be of the same size");

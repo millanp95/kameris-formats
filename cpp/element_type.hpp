@@ -13,7 +13,7 @@
 #include <boost/mpl/transform.hpp>
 #include <boost/mpl/vector.hpp>
 
-namespace mmg {
+namespace kameris {
 	// clang-format off
 	enum class element_type : uint8_t {
 		uint8, uint16, uint32, uint64, //unsigned integral types

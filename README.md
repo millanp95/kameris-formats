@@ -1,19 +1,19 @@
-# modmap-generator-formats
+# kameris-formats
 
-[![Build Status](https://travis-ci.org/stephensolis/modmap-generator-formats.svg?branch=master)](https://travis-ci.org/stephensolis/modmap-generator-formats)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7f794ad8eda04e5b94905b99a219a95e)](https://www.codacy.com/app/stephensolis/modmap-generator-formats)
-[![codebeat badge](https://codebeat.co/badges/4222a49b-3694-41d8-a560-41f7a3b3cb90)](https://codebeat.co/projects/github-com-stephensolis-modmap-generator-formats-master)
-[![Maintainability](https://api.codeclimate.com/v1/badges/5d0fdf9a3f626cf340fc/maintainability)](https://codeclimate.com/github/stephensolis/modmap-generator-formats/maintainability)
+[![Travis](https://travis-ci.org/stephensolis/kameris-formats.svg?branch=master)](https://travis-ci.org/stephensolis/kameris-formats)
+[![Codacy](https://api.codacy.com/project/badge/Grade/a61ec5a7cb51408a8682da2d2f574eba)](https://www.codacy.com/app/stephensolis/kameris-formats)
+[![Codebeat](https://codebeat.co/badges/6bbcb148-37b7-40d7-ba5e-21340541ada8)](https://codebeat.co/projects/github-com-stephensolis-kameris-formats-master)
+[![Codeclimate](https://api.codeclimate.com/v1/badges/10a65d7201ebbfb56ab5/maintainability)](https://codeclimate.com/github/stephensolis/kameris-formats/maintainability)
 
-These are implementations of readers and writers for the file formats used by [modmap-generator-cpp](https://github.com/stephensolis/modmap-generator-cpp), for the following languages:
+These are implementations of readers and writers for the file formats used by [kameris-backend](https://github.com/stephensolis/kameris-backend), for the following languages:
 
 | Language    | Location                                                                                           | Notes                                                           |
 |-------------|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
-| C++         | [`cpp/`](https://github.com/stephensolis/modmap-generator-formats/tree/master/cpp)                 | Header-only, requires [libmmg](https://github.com/stephensolis/modmap-generator-cpp/tree/master/libmmg) |
-| Python      | [`python/`](https://github.com/stephensolis/modmap-generator-formats/tree/master/python)           | On PyPI: [![PyPI version](https://badge.fury.io/py/modmap-generator-formats.svg)](https://badge.fury.io/py/modmap-generator-formats) |
+| C++         | [`cpp/`](https://github.com/stephensolis/kameris-formats/tree/master/cpp)                 | Header-only, requires [libkameris](https://github.com/stephensolis/kameris-backend/tree/master/libkameris) |
+| Python      | [`python/`](https://github.com/stephensolis/kameris-formats/tree/master/python)           | On PyPI: [![PyPI version](https://badge.fury.io/py/kameris-formats.svg)](https://badge.fury.io/py/kameris-formats) |
 <!---
-| Mathematica | [`mathematica/`](https://github.com/stephensolis/modmap-generator-formats/tree/master/mathematica) | |
-| MATLAB      | [`matlab/`](https://github.com/stephensolis/modmap-generator-formats/tree/master/matlab)           | |
+| Mathematica | [`mathematica/`](https://github.com/stephensolis/kameris-formats/tree/master/mathematica) | |
+| MATLAB      | [`matlab/`](https://github.com/stephensolis/kameris-formats/tree/master/matlab)           | |
 --->
 
 ---

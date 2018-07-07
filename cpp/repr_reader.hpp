@@ -15,15 +15,15 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/variant.hpp>
 
-#include <libmmg/utils/matrix_vector_adapters.hpp>
-#include <libmmg/utils/types.hpp>
+#include <libkameris/utils/matrix_vector_adapters.hpp>
+#include <libkameris/utils/types.hpp>
 
 #include "common/binary_collection_io.hpp"
 #include "common/binary_io.hpp"
 
 #include "headers.hpp"
 
-namespace mmg {
+namespace kameris {
 	class repr_reader {
 	 private:
 		std::ifstream _file;

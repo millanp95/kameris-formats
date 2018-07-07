@@ -6,7 +6,7 @@
 
 #include "element_type.hpp"
 
-namespace mmg {
+namespace kameris {
 	struct repr_header {
 		//0 at the end here is the version number
 		static constexpr std::array<char, 7> signature = {'M', 'M', 'R', 'E', 'P', 'R', '\0'};

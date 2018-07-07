@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='modmap-generator-formats',
-    version='1.0.2',
+    name='kameris-formats',
+    version='1.0.1',
     description=('Reader and writer implementations for the file formats used '
-                 'by modmap-generator-cpp.'),
+                 'by kameris-backend.'),
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
@@ -19,7 +19,7 @@ setup(
     ],
     author='Stephen',
     author_email='stephsolis@gmail.com',
-    url='https://github.com/stephensolis/modmap-generator-formats/',
+    url='https://github.com/stephensolis/kameris-formats/',
     license='MIT',
     packages=find_packages(),
     install_requires=[

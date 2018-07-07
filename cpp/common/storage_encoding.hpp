@@ -8,7 +8,7 @@
 #include <boost/endian/conversion.hpp>
 #include "pseudo_cast.hpp"
 
-namespace mmg {
+namespace kameris {
 	static_assert(std::numeric_limits<float>::is_iec559 && sizeof(float) == sizeof(uint32_t),
 		"floats must follow the IEEE 754 standard");
 	static_assert(std::numeric_limits<double>::is_iec559 && sizeof(double) == sizeof(uint64_t),

@@ -11,14 +11,14 @@
 #include <boost/mpl/transform.hpp>
 #include <boost/variant.hpp>
 
-#include <libmmg/utils/matrix_vector_adapters.hpp>
+#include <libkameris/utils/matrix_vector_adapters.hpp>
 
 #include "common/binary_collection_io.hpp"
 #include "common/binary_io.hpp"
 
 #include "headers.hpp"
 
-namespace mmg {
+namespace kameris {
 	class dist_reader {
 	 private:
 		static dist_header read_header(std::istream &file) {

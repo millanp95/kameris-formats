@@ -10,7 +10,7 @@
 
 #include "binary_io.hpp"
 
-namespace mmg {
+namespace kameris {
 	template <typename T>
 	inline T *read_array_binary(std::istream &stream, size_t count) {
 		auto *result = new T[count]; // NOLINT

@@ -6,7 +6,7 @@
 
 #include "storage_encoding.hpp"
 
-namespace mmg {
+namespace kameris {
 	template <typename T>
 	inline void read_binary_raw(std::istream &stream, T &target) {
 		stream.read(reinterpret_cast<char *>(&target), sizeof(T)); // NOLINT

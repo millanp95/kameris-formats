@@ -12,7 +12,7 @@
 
 #include "headers.hpp"
 
-namespace mmg {
+namespace kameris {
 	class repr_writer {
 	 private:
 		std::ofstream _file;

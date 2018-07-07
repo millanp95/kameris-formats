@@ -10,7 +10,7 @@
 
 #include "headers.hpp"
 
-namespace mmg {
+namespace kameris {
 	class dist_writer {
 	 private:
 		std::ofstream _file;
