@@ -1,5 +1,5 @@
-#ifndef _MMG_FORMATS_DIST_WRITER_
-#define _MMG_FORMATS_DIST_WRITER_
+#ifndef _KAMERIS_FORMATS_DIST_WRITER_
+#define _KAMERIS_FORMATS_DIST_WRITER_
 
 #include <fstream>
 #include <ios>

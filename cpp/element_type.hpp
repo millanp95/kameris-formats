@@ -1,17 +1,16 @@
-#ifndef _MMG_FORMATS_ELEMENT_TYPE_
-#define _MMG_FORMATS_ELEMENT_TYPE_
+#ifndef _KAMERIS_FORMATS_ELEMENT_TYPE_
+#define _KAMERIS_FORMATS_ELEMENT_TYPE_
 
 #include <cstdint>
 #include <stdexcept>
 #include <type_traits>
 
-#include <boost/mpl/at.hpp>
-#include <boost/mpl/back_inserter.hpp>
-#include <boost/mpl/for_each.hpp>
-#include <boost/mpl/map.hpp>
-#include <boost/mpl/pair.hpp>
-#include <boost/mpl/transform.hpp>
-#include <boost/mpl/vector.hpp>
+#include <boost/hana/at_key.hpp>
+#include <boost/hana/for_each.hpp>
+#include <boost/hana/keys.hpp>
+#include <boost/hana/map.hpp>
+#include <boost/hana/pair.hpp>
+#include <boost/hana/type.hpp>
 
 namespace kameris {
 	// clang-format off
@@ -22,34 +21,25 @@ namespace kameris {
 	// clang-format on
 	using element_underlying_t = typename std::underlying_type<element_type>::type;
 
-	using type_to_element_type_map = boost::mpl::map< //
-		boost::mpl::pair<uint8_t, std::integral_constant<element_type, element_type::uint8>>,
-		boost::mpl::pair<uint16_t, std::integral_constant<element_type, element_type::uint16>>,
-		boost::mpl::pair<uint32_t, std::integral_constant<element_type, element_type::uint32>>,
-		boost::mpl::pair<uint64_t, std::integral_constant<element_type, element_type::uint64>>,
-		boost::mpl::pair<float, std::integral_constant<element_type, element_type::float32>>,
-		boost::mpl::pair<double, std::integral_constant<element_type, element_type::float64>>>;
-
-	using element_type_types = typename boost::mpl::transform<type_to_element_type_map,
-		boost::mpl::first<boost::mpl::_1>, boost::mpl::back_inserter<boost::mpl::vector<>>>::type;
-
-	template <typename T>
-	constexpr element_type element_type_for_type = boost::mpl::at<type_to_element_type_map, T>::type::value;
-
-	template <typename Func>
-	void dispatch_on_element_type(element_type t, Func func) {
-		bool did_dispatch = false;
-		boost::mpl::for_each<element_type_types>([&](auto dummy) {
-			using T = decltype(dummy);
-			if (element_type_for_type<T> == t) {
-				func.template operator()<T>();
-				did_dispatch = true;
-			}
-		});
-		if (!did_dispatch) {
+	inline void check_element_type_valid(element_type t) {
+		if (t != element_type::uint8 && t != element_type::uint16 && t != element_type::uint32 &&
+			/**/ t != element_type::uint64 && t != element_type::float32 && t != element_type::float64) {
 			throw std::invalid_argument("Unknown value for element_type");
 		}
 	}
+
+	constexpr auto type_to_element_type_map = boost::hana::make_map( //
+		boost::hana::make_pair(boost::hana::type_c<uint8_t>, element_type::uint8),
+		boost::hana::make_pair(boost::hana::type_c<uint16_t>, element_type::uint16),
+		boost::hana::make_pair(boost::hana::type_c<uint32_t>, element_type::uint32),
+		boost::hana::make_pair(boost::hana::type_c<uint64_t>, element_type::uint64),
+		boost::hana::make_pair(boost::hana::type_c<float>, element_type::float32),
+		boost::hana::make_pair(boost::hana::type_c<double>, element_type::float64));
+
+	constexpr auto element_type_types = boost::hana::keys(type_to_element_type_map);
+
+	template <typename T>
+	constexpr element_type element_type_for_type = type_to_element_type_map[boost::hana::type_c<T>];
 }
 
 #endif

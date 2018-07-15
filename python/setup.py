@@ -8,7 +8,7 @@ with open(os.path.join(os.path.dirname(__file__),
 
 setup(
     name='kameris-formats',
-    version='1.0.3',
+    version='1.0.5',
     description=('Reader and writer implementations for the file formats used '
                  'by kameris-backend.'),
     long_description=long_description,

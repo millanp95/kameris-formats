@@ -1,5 +1,5 @@
-#ifndef _MMG_FORMATS_ALL_FORMATS_
-#define _MMG_FORMATS_ALL_FORMATS_
+#ifndef _KAMERIS_FORMATS_ALL_FORMATS_
+#define _KAMERIS_FORMATS_ALL_FORMATS_
 
 #include "dist_reader.hpp"
 #include "dist_writer.hpp"

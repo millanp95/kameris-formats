@@ -1,5 +1,5 @@
-#ifndef _MMG_FORMATS_COMMON_BINARY_IO_
-#define _MMG_FORMATS_COMMON_BINARY_IO_
+#ifndef _KAMERIS_FORMATS_COMMON_BINARY_IO_
+#define _KAMERIS_FORMATS_COMMON_BINARY_IO_
 
 #include <istream>
 #include <ostream>

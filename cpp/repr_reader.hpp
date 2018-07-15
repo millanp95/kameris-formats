@@ -1,5 +1,5 @@
-#ifndef _MMG_FORMATS_REPR_READER_
-#define _MMG_FORMATS_REPR_READER_
+#ifndef _KAMERIS_FORMATS_REPR_READER_
+#define _KAMERIS_FORMATS_REPR_READER_
 
 #include <fstream>
 #include <ios>
@@ -9,10 +9,10 @@
 #include <string>
 #include <utility>
 
-#include <boost/mpl/back_inserter.hpp>
-#include <boost/mpl/copy.hpp>
-#include <boost/mpl/transform.hpp>
-#include <boost/mpl/vector.hpp>
+#include <boost/hana/concat.hpp>
+#include <boost/hana/transform.hpp>
+#include <boost/hana/type.hpp>
+#include <boost/hana/unpack.hpp>
 #include <boost/variant.hpp>
 
 #include <libkameris/utils/matrix_vector_adapters.hpp>
@@ -30,13 +30,6 @@ namespace kameris {
 		const repr_header _header;
 		std::unique_ptr<uint64_t[]> _header_sizes;
 		std::mutex _lock;
-
-		//boost::mpl needs some help to work with template template and variadic template args
-		template <typename Key, typename Value>
-		struct SparseVectorAdapterTypeWrapper {
-			using map_type = decltype(read_map_binary<Key, Value>(std::declval<std::istream &>(), size_t()));
-			using type = decltype(make_sparse_vector_adapter(std::declval<map_type>(), size_t()));
-		};
 
 		repr_header read_header() {
 			const std::unique_ptr<char[]> file_signature(read_array_binary<char>(_file, repr_header::signature.size()));
@@ -75,33 +68,44 @@ namespace kameris {
 		}
 
 		auto read_matrix(size_t index) {
-			using regular_matrix_types =
-				typename boost::mpl::transform<element_type_types, MatrixAdapter<boost::mpl::_1>>::type;
-			using sparse_vector_types = typename boost::mpl::transform<element_type_types,
-				SparseVectorAdapterTypeWrapper<uint64_t, boost::mpl::_1>>::type;
-			typename boost::make_variant_over<boost::mpl::copy<sparse_vector_types,
-				boost::mpl::back_inserter<regular_matrix_types>>::type>::type result;
+			auto regular_matrix_types = boost::hana::transform(element_type_types,
+				[](auto t) { return boost::hana::type_c<MatrixAdapter<typename decltype(t)::type>>; });
+			auto sparse_vector_types = boost::hana::transform(element_type_types, [](auto t) {
+				using SparseVectorAdapterT = decltype(make_sparse_vector_adapter(
+					std::declval<std::map<uint64_t, typename decltype(t)::type>>(), size_t()));
+				return boost::hana::type_c<SparseVectorAdapterT>;
+			});
+			auto result_type = boost::hana::unpack(
+				boost::hana::concat(regular_matrix_types, sparse_vector_types), boost::hana::template_<boost::variant>);
+			typename decltype(result_type)::type result;
 
 			_lock.lock();
-			dispatch_on_element_type(_header.value_type, [&](auto dummy_val = 0) {
-				using Value = decltype(dummy_val);
+			boost::hana::for_each(element_type_types, [&](auto value_type) {
+				using Value = typename decltype(value_type)::type;
 
-				if (_header.is_sparse) {
-					dispatch_on_element_type(_header.key_type, [&](auto dummy_key = 0) {
-						using Key = decltype(dummy_key);
+				if (element_type_for_type<Value> == _header.value_type) {
+					if (_header.is_sparse) {
+						boost::hana::for_each(element_type_types, [&](auto key_type) {
+							using Key = typename decltype(key_type)::type;
 
-						_file.seekg(repr_header_size + (sizeof(uint64_t) * _header.count) +
-							std::accumulate(&_header_sizes[0], &_header_sizes[index], uint64_t(0)));
-						result = make_sparse_vector_adapter<uint64_t, Value>(
-							read_map_binary<Key, Value>(_file, _header_sizes[index]), _header.rows * _header.cols);
-					});
-				} else {
-					_file.seekg(repr_header_size + (index * _header.rows * _header.cols * sizeof(Value)));
-					result = make_matrix_adapter<Value>(
-						read_array_binary<Value>(_file, _header.rows * _header.cols), _header.rows, _header.cols, true);
+							if (element_type_for_type<Value> == _header.key_type) {
+								_file.seekg(repr_header_size + (sizeof(uint64_t) * _header.count) +
+									std::accumulate(&_header_sizes[0], &_header_sizes[index], uint64_t(0)));
+								result = make_sparse_vector_adapter<uint64_t, Value>(
+									read_map_binary<Key, Value>(_file, _header_sizes[index]),
+									_header.rows * _header.cols);
+							}
+						});
+					} else {
+						_file.seekg(repr_header_size + (index * _header.rows * _header.cols * sizeof(Value)));
+						result =
+							make_matrix_adapter<Value>(read_array_binary<Value>(_file, _header.rows * _header.cols),
+								_header.rows, _header.cols, true);
+					}
 				}
 			});
 			_lock.unlock();
+
 			return result;
 		}
 	};

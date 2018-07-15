@@ -1,5 +1,5 @@
-#ifndef _MMG_FORMATS_DIST_READER_
-#define _MMG_FORMATS_DIST_READER_
+#ifndef _KAMERIS_FORMATS_DIST_READER_
+#define _KAMERIS_FORMATS_DIST_READER_
 
 #include <algorithm>
 #include <fstream>
@@ -8,7 +8,8 @@
 #include <string>
 #include <utility>
 
-#include <boost/mpl/transform.hpp>
+#include <boost/hana/transform.hpp>
+#include <boost/hana/unpack.hpp>
 #include <boost/variant.hpp>
 
 #include <libkameris/utils/matrix_vector_adapters.hpp>
@@ -44,15 +45,20 @@ namespace kameris {
 			std::ifstream file(filename, std::ios::binary);
 			dist_header header = read_header(file);
 
-			typename boost::make_variant_over<boost::mpl::transform<element_type_types,
-				SymmetricDistanceMatrixAdapter<boost::mpl::_1>>::type>::type result;
+			auto dist_adapter_types = boost::hana::transform(element_type_types,
+				[](auto t) { return boost::hana::type_c<SymmetricDistanceMatrixAdapter<typename decltype(t)::type>>; });
+			auto result_type = boost::hana::unpack(dist_adapter_types, boost::hana::template_<boost::variant>);
+			typename decltype(result_type)::type result;
 
-			dispatch_on_element_type(header.value_type, [&](auto dummy_val = 0) {
-				using Value = decltype(dummy_val);
-				const size_t matrix_data_size = header.size * (header.size - 1) / 2;
+			boost::hana::for_each(element_type_types, [&](auto type) {
+				using Value = typename decltype(type)::type;
 
-				result = make_symmetric_distance_adapter<Value>(
-					read_array_binary<Value>(file, matrix_data_size), header.size, true);
+				if (element_type_for_type<Value> == header.value_type) {
+					const size_t matrix_data_size = header.size * (header.size - 1) / 2;
+
+					result = make_symmetric_distance_adapter<Value>(
+						read_array_binary<Value>(file, matrix_data_size), header.size, true);
+				}
 			});
 			return result;
 		}

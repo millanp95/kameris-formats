@@ -1,5 +1,5 @@
-#ifndef _MMG_FORMATS_HEADERS_
-#define _MMG_FORMATS_HEADERS_
+#ifndef _KAMERIS_FORMATS_HEADERS_
+#define _KAMERIS_FORMATS_HEADERS_
 
 #include <array>
 #include <cstdint>

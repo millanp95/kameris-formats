@@ -1,5 +1,5 @@
-#ifndef _MMG_FORMATS_REPR_WRITER_
-#define _MMG_FORMATS_REPR_WRITER_
+#ifndef _KAMERIS_FORMATS_REPR_WRITER_
+#define _KAMERIS_FORMATS_REPR_WRITER_
 
 #include <fstream>
 #include <ios>
