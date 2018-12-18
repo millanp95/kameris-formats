@@ -24,9 +24,9 @@ class repr_reader():
         self.key_type = common.dtype_for_element_type[key_type_val]
         value_type_val = ord(self.file.read(1))
         self.value_type = common.dtype_for_element_type[value_type_val]
-        self.count, = struct.unpack('<Q', self.file.read(8))
-        self.rows, = struct.unpack('<Q', self.file.read(8))
-        self.cols, = struct.unpack('<Q', self.file.read(8))
+        self.count, = struct.unpack(b'<Q', self.file.read(8))
+        self.rows, = struct.unpack(b'<Q', self.file.read(8))
+        self.cols, = struct.unpack(b'<Q', self.file.read(8))
 
         if self.is_sparse:
             self.sizes = np.fromfile(self.file, dtype=np.dtype('<u8'),

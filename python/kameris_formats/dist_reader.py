@@ -18,7 +18,7 @@ class dist_reader():
 
             # fetch header values
             value_type = ord(file.read(1))
-            size, = struct.unpack('<Q', file.read(8))
+            size, = struct.unpack(b'<Q', file.read(8))
 
             # read matrix values
             matrix_data_size = int(size * (size - 1) / 2)
